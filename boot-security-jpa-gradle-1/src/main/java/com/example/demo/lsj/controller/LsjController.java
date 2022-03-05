@@ -16,7 +16,7 @@ public class LsjController {
 	public ModelAndView SelectList(ModelAndView mav) {
 		
 		mav.setViewName("/lsj/list");
-		System.out.println("ffffff");
+		System.out.println("gggggggg");
 		
 		return mav;
 		
