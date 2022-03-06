@@ -52,6 +52,7 @@ public class KgnController {
 		
 		try {
 			
+			
 			Map<String,String> requestParams = new LinkedHashMap<String,String>();
 			requestParams.put("serviceKey","bYhQpkws1NzgWD6fE5nIDq%2B%2FlsRs4i9gnV0Y6VGGqP8D7uqWuiN3JDXrO7%2F%2Byx%2Bciv8hJYfL%2FcE%2BsbIiIypjXQ%3D%3D");
 			requestParams.put("pageNo","1");
