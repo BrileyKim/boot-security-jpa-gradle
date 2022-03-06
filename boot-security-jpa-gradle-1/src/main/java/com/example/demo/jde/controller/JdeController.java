@@ -16,7 +16,7 @@ public class JdeController {
 	public ModelAndView SelectList(ModelAndView mav) {
 		
 		mav.setViewName("/jde/list");
-		
+		//asasasqwewq
 		return mav;
 		
 	}
