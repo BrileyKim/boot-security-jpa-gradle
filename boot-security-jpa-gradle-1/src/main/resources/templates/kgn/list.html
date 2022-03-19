@@ -15,7 +15,42 @@
 <div data-include-path="/html/nav.html"></div>
 
 <main class="container">
-	여기에 내용을 쓰세요.
+	<form action="/kgn" id="frm" method="get">
+		<div class="col-md-12 mt-4">
+			<table class="table table-striped table-horizontal table-bordered mt-3">
+				<thead class="thead-strong">
+					<tr>
+						<th>번호</th>
+						<th>주소</th>
+						<th>사용여부</th>
+						<th>폐전일자</th>
+						<th>기준일자</th>
+					</tr>
+				</thead>
+				<tbody id="tbody">
+					<tr th:each="list,index : ${resultList}">
+						<td>
+							<span th:text="${list.num}"></span>
+						</td>
+						<td>
+							<span th:text="${list.jibunNm}"></span>
+						</td>
+						<td>
+							<span th:text="${list.availability}"></span>
+						</td>
+						<td>
+							<span th:text="${list.clsfldDt}"></span>
+						</td>
+						<td>
+							<span th:text="${list.baseDt}"></span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		
+		</div>
+	</form>
+
 </main>
 <script th:src="@{/js/lib/bootstrap.min.js}"></script>
 <script th:src="@{/js/lib/bootstrap.bundle.min.js}"></script>

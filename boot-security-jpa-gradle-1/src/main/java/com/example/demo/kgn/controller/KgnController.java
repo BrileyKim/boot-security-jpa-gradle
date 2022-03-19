@@ -9,18 +9,20 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.commons.text.StringEscapeUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.kgn.service.KgnService;
+import com.example.demo.kgn.vo.FirePlug;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +36,7 @@ public class KgnController {
 	@GetMapping()
 	public ModelAndView SelectList(ModelAndView mav) throws UnsupportedEncodingException{
 		
+		List<FirePlug> resultList = new ArrayList<FirePlug>();
 		
 		try {
 			
@@ -63,7 +66,40 @@ public class KgnController {
 	        rd.close();
 	        conn.disconnect();
 	        
-		
+	        JSONParser parser = new JSONParser();
+	        JSONObject obj = (JSONObject)parser.parse(sb.toString());
+	        
+	        JSONArray parse_listArr = (JSONArray)obj.get("list");
+	        
+	        for(int i=0 ; i < parse_listArr.size(); i++) {
+	        	
+	        	FirePlug fp = new FirePlug();
+	        	
+	        	JSONObject firePlug = (JSONObject) parse_listArr.get(i);
+	        	
+	        	fp.setNum(String.valueOf(i+1));
+	        	fp.setJibunNm(String.valueOf(firePlug.get("jibunNm")));
+	        	fp.setBaseDt(String.valueOf(firePlug.get("baseDt")));
+	        	
+	        	String availability = String.valueOf(firePlug.get("availability"));
+	        	
+	        	if("Y".equals(availability)) {
+	        		fp.setAvailability("O"); 
+	        	}else {
+	        		fp.setAvailability("X");
+	        	}
+	        	
+	        	String clsfldDt = String.valueOf(firePlug.get("clsfldDt"));
+	        	
+	        	if("null".equals(clsfldDt)) {
+	        		fp.setClsfldDt("");
+	        	}else {
+	        		fp.setClsfldDt(clsfldDt);
+	        	}
+
+	        	resultList.add(fp);
+	        }
+	        
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
@@ -72,9 +108,11 @@ public class KgnController {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 		
-		
+		mav.addObject("resultList", resultList);
 		mav.setViewName("/kgn/list");
 		
 		return mav;
