@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<title>장대은</title>
-<!-- Bootstrap core css -->
-<link th:href="@{/css/lib/bootstrap.min.css}" rel="stylesheet">
-<link th:href="@{/css/lib/navbar-top-fixed.css}" rel="stylesheet">
-<link rel="canonical" th:href="@{https://getbootstrap.com/docs/5.1/examples/navbar-fixed/}">
-<link th:href="@{/css/common.css}" rel="stylesheet">
-</head>
-<body>
-<div data-include-path="/html/nav.html"></div>
+<th:block th:replace="common/head :: headFragment"></th:block>
+<title>대은</title>
 
-<main class="container">
-	여기에 내용을 쓰세요
-</main>
-<script th:src="@{/js/lib/bootstrap.min.js}"></script>
-<script th:src="@{/js/lib/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/js/includeHTML.js}"></script>
+<body>
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<main class="container">
+		<table>
+			<thead>
+				<tr>
+					<td>병원명</td>
+					<td>주소</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="list:${list}">
+					<td th:text=${list.getYadmNm}></td>
+					<td th:text=${list.addr}></td>
+				</tr>
+			</tbody>
+			
+		</table>
+	</main>
+	<th:block th:replace="common/footer :: footerFragment"></th:block>
 </body>
+
 </html>
